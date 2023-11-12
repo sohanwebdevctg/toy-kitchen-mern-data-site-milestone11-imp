@@ -32,6 +32,21 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    // database table name list
+    const galleryCollection = client.db("toyKitchen").collection("gallery");
+
+    app.get("/gallery", async (req, res) => {
+      const cursor = await galleryCollection.find().toArray();
+      res.send(cursor)
+    })
+
+    app.post('/gallery', async (req, res) => {
+      const gallery = await galleryCollection.insertMany();
+      res.send(gallery)
+    })
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -49,3 +64,5 @@ run().catch(console.dir);
 app.listen(port, () => {
   console.log(`this is server site port ${port}`)
 })
+
+// http://localhost:5000/gallery
