@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 })
 
 // serverSetup start
-
 const uri = `mongodb+srv://${process.env.APP_USER}:${process.env.APP_PASSWORD}@cluster0.hoynchx.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -35,7 +34,7 @@ async function run() {
 
     // database table name list
     const galleryCollection = client.db("toyKitchen").collection("gallery");
-    const featuresProductsCollection = client.db("toyKitchen".collection("featuresProducts"))
+    const featuresProductsCollection = client.db("toyKitchen").collection("featuresProducts");
 
     //get gallery data
     app.get("/gallery", async (req, res) => {
@@ -44,6 +43,10 @@ async function run() {
     })
 
     //get featuresProducts data
+    app.get("/featuresProducts", async (req, res) => {
+      const result = await featuresProductsCollection.find().toArray();
+      res.send(result);
+    })
 
 
     //post gallery data
@@ -76,4 +79,6 @@ run().catch(console.dir);
 app.listen(port, () => {
   console.log(`this is server site port ${port}`)
 })
+
+// http://localhost:5000/featuresProducts
 
