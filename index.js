@@ -35,6 +35,7 @@ async function run() {
     // database table name list
     const galleryCollection = client.db("toyKitchen").collection("gallery");
     const featuresProductsCollection = client.db("toyKitchen").collection("featuresProducts");
+    const shopByCategoryCollection = client.db("toyKitchen").collection("shopByCategory");
 
     //get gallery data
     app.get("/gallery", async (req, res) => {
@@ -48,6 +49,12 @@ async function run() {
       res.send(result);
     })
 
+    //get shopByCategory data
+    app.get('/shopByCategory', async (req, res) => {
+      const shopByCategory = await shopByCategoryCollection.find().toArray();
+      res.send(shopByCategory);
+    })
+
 
     //post gallery data
     app.post('/gallery', async (req, res) => {
@@ -59,6 +66,12 @@ async function run() {
     app.post('/featuresProducts', async (req, res) => {
       const featuresProducts = await featuresProductsCollection.insertMany();
       res.send(featuresProducts)
+    })
+
+    //post shopByCategory data
+    app.post('/shopByCategory', async (req, res) => {
+      const shopByCategory = await shopByCategoryCollection.insertMany();
+      res.send(shopByCategory);
     })
 
 
@@ -80,5 +93,5 @@ app.listen(port, () => {
   console.log(`this is server site port ${port}`)
 })
 
-// http://localhost:5000/featuresProducts
+
 
