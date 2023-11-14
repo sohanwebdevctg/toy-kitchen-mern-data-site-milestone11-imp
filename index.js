@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const cors = require("cors")
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000
 
 // middleware
@@ -55,6 +55,13 @@ async function run() {
       res.send(shopByCategory);
     })
 
+    //get shopCategoryDetails data
+    app.get('/shopCategoryDetails/:id', async (req, res) => {
+      const id = req.params.id;
+      const idValue = {_id : new ObjectId(id)}
+      const data = await shopByCategoryCollection.findOne(idValue);
+      res.send(data);
+    })
 
     //post gallery data
     app.post('/gallery', async (req, res) => {
@@ -92,6 +99,5 @@ run().catch(console.dir);
 app.listen(port, () => {
   console.log(`this is server site port ${port}`)
 })
-
 
 
