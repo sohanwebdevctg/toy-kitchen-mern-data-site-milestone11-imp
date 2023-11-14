@@ -35,7 +35,7 @@ async function run() {
     // database table name list
     const galleryCollection = client.db("toyKitchen").collection("gallery");
     const featuresProductsCollection = client.db("toyKitchen").collection("featuresProducts");
-    const shopByCategoryCollection = client.db("toyKitchen").collection("shopByCategory");
+    const addAToysCollection = client.db("toyKitchen").collection("addAToysCollection");
 
     //get gallery data
     app.get("/gallery", async (req, res) => {
@@ -49,19 +49,15 @@ async function run() {
       res.send(result);
     })
 
-    //get shopByCategory data
-    app.get('/shopByCategory', async (req, res) => {
-      const shopByCategory = await shopByCategoryCollection.find().toArray();
-      res.send(shopByCategory);
-    })
+    
 
     //get shopCategoryDetails data
-    app.get('/shopCategoryDetails/:id', async (req, res) => {
-      const id = req.params.id;
-      const idValue = {_id : new ObjectId(id)}
-      const data = await shopByCategoryCollection.findOne(idValue);
-      res.send(data);
-    })
+    // app.get('/shopCategoryDetails/:id', async (req, res) => {
+    //   const id = req.params.id;
+    //   const idValue = {_id : new ObjectId(id)}
+    //   const data = await shopByCategoryCollection.findOne(idValue);
+    //   res.send(data);
+    // })
 
     //post gallery data
     app.post('/gallery', async (req, res) => {
@@ -75,11 +71,14 @@ async function run() {
       res.send(featuresProducts)
     })
 
-    //post shopByCategory data
-    app.post('/shopByCategory', async (req, res) => {
-      const shopByCategory = await shopByCategoryCollection.insertMany();
-      res.send(shopByCategory);
+    //post addAToys data
+    app.post('/addAToys', async (req, res) => {
+      const data = req.body;
+      const result = await addAToysCollection.insertOne(data);
+      res.send(result)
     })
+
+  
 
 
     // Send a ping to confirm a successful connection
