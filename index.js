@@ -55,13 +55,26 @@ async function run() {
       res.send(result)
     })
 
-    //get shopCategoryDetails data
-    // app.get('/shopCategoryDetails/:id', async (req, res) => {
-    //   const id = req.params.id;
-    //   const idValue = {_id : new ObjectId(id)}
-    //   const data = await shopByCategoryCollection.findOne(idValue);
-    //   res.send(data);
-    // })
+    // get allToys data
+    app.get('/allToys', async(req, res) => {
+      const allToys = await addAToysCollection.find().limit(20).toArray();
+      res.send(allToys);
+    })
+
+    // get shopCategoryDetails data
+    app.get('/shopCategoryDetails/:id', async (req, res) => {
+      const id = req.params.id;
+      const idValue = {_id : new ObjectId(id)}
+      const data = await addAToysCollection.findOne(idValue);
+      res.send(data);
+    })
+
+    app.get('/toyDetails/:id', async (req, res) => {
+      const id = req.params.id;
+      const idValue = {_id : new ObjectId(id)}
+      const data = await addAToysCollection.findOne(idValue);
+      res.send(data);
+    })
 
     //post gallery data
     app.post('/gallery', async (req, res) => {
