@@ -49,7 +49,11 @@ async function run() {
       res.send(result);
     })
 
-    
+    //get shopByCategory data
+    app.get('/shopByCategory', async (req, res) => {
+      const result = await addAToysCollection.find().toArray();
+      res.send(result)
+    })
 
     //get shopCategoryDetails data
     // app.get('/shopCategoryDetails/:id', async (req, res) => {
