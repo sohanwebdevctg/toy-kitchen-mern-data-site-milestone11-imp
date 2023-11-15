@@ -69,11 +69,32 @@ async function run() {
       res.send(data);
     })
 
+    //get toyDetails data
     app.get('/toyDetails/:id', async (req, res) => {
       const id = req.params.id;
       const idValue = {_id : new ObjectId(id)}
       const data = await addAToysCollection.findOne(idValue);
       res.send(data);
+    })
+
+    //get myToys data
+    app.get('/myToys', async (req, res) => {
+      
+      let query = {}
+      if(req.query?.email){
+        query = {email : req.query.email}
+      }
+      const result =  await addAToysCollection.find(query).toArray();
+      res.send(result)
+
+    })
+
+    //get toyUpdate data
+    app.get('/toyUpdate/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = {_id : new ObjectId(id)}
+      const result = await addAToysCollection.findOne(query);
+      res.send(result)
     })
 
     //post gallery data
@@ -96,6 +117,13 @@ async function run() {
     })
 
   
+    //delete data
+    app.delete('/deleteData/:id', async (req, res) => {
+      const id = req.params.id;
+      const data = {_id : new ObjectId(id)}
+      const result = await addAToysCollection.deleteOne(data);
+      res.send(result)
+    })
 
 
     // Send a ping to confirm a successful connection
