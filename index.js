@@ -97,13 +97,14 @@ async function run() {
       res.send(result)
     })
 
+    
     app.get('/high', async (req, res) => {
-      const result = await addAToysCollection.find().sort({ toyPrice : 1}).toArray();
+      const result = await addAToysCollection.find().sort({ toyPrice : -1}).toArray();
       res.send(result)
     })
 
     app.get('/low', async (req, res) => {
-      const result = await addAToysCollection.find().sort({ toyPrice : -1}).toArray();
+      const result = await addAToysCollection.find().sort({ toyPrice : 1}).toArray();
       res.send(result);
     })
 
