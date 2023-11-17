@@ -39,13 +39,14 @@ async function run() {
 
     // get gallery data
     app.get("/gallery", async (req, res) => {
+      
       const cursor = await galleryCollection.find().toArray();
       res.send(cursor)
     })
 
     // post gallery data
     app.post('/gallery', async (req, res) => {
-      const gallery = await galleryCollection.insertMany();
+      const gallery = await galleryCollection.insertMany()
       res.send(gallery)
     })
 
